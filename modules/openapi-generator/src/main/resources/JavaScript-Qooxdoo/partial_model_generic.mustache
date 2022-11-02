@@ -15,7 +15,7 @@ qx.Class.define("{{#apiPackage}}{{.}}.{{/apiPackage}}{{#modelPackage}}{{.}}.{{/m
                 this.{{name}} = [];
                 for (let i = 0; i < data["{{baseName}}"].length; i++) {
     {{#items.complexType}}
-                    this.{{name}}.push(new {{modelPackage}}.{{items.complexType}}(data["{{baseName}}"][i]));
+                    this.{{name}}.push(new {{#apiPackage}}{{.}}.{{/apiPackage}}{{#modelPackage}}{{.}}.{{/modelPackage}}{{items.complexType}}(data["{{baseName}}"][i]));
     {{/items.complexType}}
     {{^items.complexType}}
                     this.{{name}}.push(data["{{baseName}}"][i]);
@@ -29,7 +29,7 @@ qx.Class.define("{{#apiPackage}}{{.}}.{{/apiPackage}}{{#modelPackage}}{{.}}.{{/m
             }
 {{/isContainer}}
 {{^isContainer}}
-            this.{{name}} = new {{modelPackage}}.{{complexType}}(data["{{baseName}}"]);
+            this.{{name}} = new {{#apiPackage}}{{.}}.{{/apiPackage}}{{#modelPackage}}{{.}}.{{/modelPackage}}{{complexType}}(data["{{baseName}}"]);
 {{/isContainer}}
 {{/isPrimitiveType}}
         }
