@@ -1,0 +1,77 @@
+qx.Class.define("{{#apiPackage}}{{.}}.{{/apiPackage}}{{#modelPackage}}{{.}}.{{/modelPackage}}{{classname}}", {
+    extend: qx.core.Object,
+
+    construct(data) {
+        this.base(arguments);
+
+{{#vars}}
+        if (data.hasOwnProperty("{{baseName}}")) {
+{{#isPrimitiveType}}
+            this.{{name}} = data["{{baseName}}"];
+{{/isPrimitiveType}}
+{{^isPrimitiveType}}
+{{#isContainer}}
+            if (data["{{baseName}}"] instanceof Array) {
+                this.{{name}} = [];
+                for (let i = 0; i < data["{{baseName}}"].length; i++) {
+    {{#items.complexType}}
+                    this.{{name}}.push(new {{modelPackage}}.{{items.complexType}}(data["{{baseName}}"][i]));
+    {{/items.complexType}}
+    {{^items.complexType}}
+                    this.{{name}}.push(data["{{baseName}}"][i]);
+    {{/items.complexType}}
+                }
+            } else {
+                this.{{name}} = {};
+                for (let k in data["{{baseName}}"]) {
+                    this.{{name}}[k] = data["{{baseName}}"][k];
+                }
+            }
+{{/isContainer}}
+{{^isContainer}}
+            this.{{name}} = new {{modelPackage}}.{{complexType}}(data["{{baseName}}"]);
+{{/isContainer}}
+{{/isPrimitiveType}}
+        }
+{{/vars}}
+    },
+
+    members: {
+        toSimpleObject() {
+            const ret = {};
+
+{{#vars}}
+{{#isPrimitiveType}}            ret["{{baseName}}"] = this.{{name}};
+{{/isPrimitiveType}}
+{{^isPrimitiveType}}
+{{#isContainer}}            if (this.{{name}} instanceof Array) {
+                ret["{{baseName}}"] = [];
+                for (let i = 0; i < this.{{name}}.length; i++) {
+{{#items.complexType}}
+                    ret["{{baseName}}"].push(this.{{name}}[i].toSimpleObject());
+{{/items.complexType}}
+{{^items.complexType}}
+                    ret["{{baseName}}"].push(this.{{name}}[i]);
+{{/items.complexType}}
+                }
+            } else {
+                ret["{{baseName}}"] = {};
+                for (let k in this.{{name}}) {
+{{#items.complexType}}
+                    ret["{{baseName}}"][k] = this.{{name}}[k].toSimpleObject();
+{{/items.complexType}}
+{{^items.complexType}}
+                    ret["{{baseName}}"][k] = this.{{name}}[k];
+{{/items.complexType}}
+                }
+            }
+{{/isContainer}}
+{{^isContainer}}            ret["{{baseName}}"] = this.{{name}}.toSimpleObject();
+{{/isContainer}}
+{{/isPrimitiveType}}
+{{/vars}}
+
+            return ret;
+        }
+    }
+});

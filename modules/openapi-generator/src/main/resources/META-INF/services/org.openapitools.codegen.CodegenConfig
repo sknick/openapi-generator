@@ -70,6 +70,7 @@ org.openapitools.codegen.languages.JavaJerseyServerCodegen
 org.openapitools.codegen.languages.JavaResteasyServerCodegen
 org.openapitools.codegen.languages.JavaResteasyEapServerCodegen
 org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen
+org.openapitools.codegen.languages.JavaScriptQooxdooClientCodegen
 org.openapitools.codegen.languages.JavascriptClientCodegen
 org.openapitools.codegen.languages.JavascriptApolloClientCodegen
 org.openapitools.codegen.languages.JavascriptFlowtypedClientCodegen

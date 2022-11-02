@@ -1,0 +1,12 @@
+qx.Class.define("{{modelPackage}}.{{classname}}", {
+    extend: qx.core.Object,
+
+    statics: {
+{{#allowableValues}}{{#enumVars}}        {{name}}: {{{value}}},
+{{/enumVars}}{{/allowableValues}}
+    },
+
+    construct() {
+        this.base(arguments);
+    }
+});
