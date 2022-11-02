@@ -1,6 +1,12 @@
 qx.Class.define("{{#apiPackage}}{{.}}.{{/apiPackage}}{{#modelPackage}}{{.}}.{{/modelPackage}}{{classname}}", {
     extend: qx.core.Object,
 
+    /**
+     * Constructor.
+     *
+     * @param {Object} The data as an object whose keys are to be further deconstructed into real model objects (i.e.,
+     *                 a parsed JSON object).
+     */
     construct(data) {
         this.base(arguments);
 
@@ -37,6 +43,10 @@ qx.Class.define("{{#apiPackage}}{{.}}.{{/apiPackage}}{{#modelPackage}}{{.}}.{{/m
     },
 
     members: {
+        /**
+         * @return {Object} The plain object which can represent this model object. This method effectively reconstructs
+         *                  what was passed to the model object on its construction.
+         */
         toSimpleObject() {
             const ret = {};
 
